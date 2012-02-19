@@ -48,7 +48,7 @@
 		<SEQ TYPE="OPERATOR">&lt;:</SEQ> <!-- NOTE: will these appear outside of {}s which delegate to typeDescription? -->
 
 		<!-- function calls and definitions -->
-		<MARK_PREVIOUS MATCH_TYPE="OPERATOR" TYPE="FUNCTION">(</MARK_PREVIOUS>
+		<MARK_PREVIOUS MATCH_TYPE="NULL" TYPE="FUNCTION">(</MARK_PREVIOUS>
 
 		<!-- macros -->
 		<MARK_FOLLOWING TYPE="MARKUP">@</MARK_FOLLOWING>
