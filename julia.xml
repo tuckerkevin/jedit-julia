@@ -1,0 +1,589 @@
+<?xml version="1.0"?>
+<!DOCTYPE MODE SYSTEM "xmode.dtd">
+<!--
+	Julia (http://julialang.org) edit mode
+	by Kevin Tucker
+
+	catalog line:
+	<MODE NAME="julia" FILE="julia.xml" FILE_NAME_GLOB="*.j" />
+	-->
+
+<MODE>
+	<PROPS>
+		<PROPERTY NAME="lineComment" VALUE="#"/>
+	</PROPS>
+
+	<RULES
+		IGNORE_CASE="FALSE"
+		HIGHLIGHT_DIGITS="TRUE"
+		DIGIT_RE="[0-9]+(im)?|0x[0-9a-fA-F]+(im)?|[0-9]+e[0-9]*(im)?">
+
+		<!-- comments -->
+		<EOL_SPAN TYPE="COMMENT4">####</EOL_SPAN>
+		<EOL_SPAN TYPE="COMMENT3">###</EOL_SPAN>
+		<EOL_SPAN TYPE="COMMENT2">##</EOL_SPAN>
+		<EOL_SPAN TYPE="COMMENT1">#</EOL_SPAN>
+
+		<!-- characters -->
+		<SPAN TYPE="LITERAL1" ESCAPE="\"> <BEGIN>'</BEGIN> <END>'</END> </SPAN>
+
+		<!-- strings -->
+		<SPAN TYPE="LITERAL2" DELEGATE="stringLiteral2"> <BEGIN>"</BEGIN> <END>"</END> </SPAN>
+		<SPAN TYPE="LITERAL2" DELEGATE="stringLiteral2"> <BEGIN>I"</BEGIN> <END>"</END> </SPAN>
+		<SPAN TYPE="LITERAL2" ESCAPE="\"> <BEGIN>E"</BEGIN> <END>"</END> </SPAN>
+		<SPAN TYPE="LITERAL2" ESCAPE="\"> <BEGIN>L"</BEGIN> <END>"</END> </SPAN>
+
+		<!-- regexs -->
+		<SPAN_REGEXP HASH_CHAR="r" TYPE="LITERAL4" ESCAPE="\"> <BEGIN>r[ims]*"</BEGIN> <END>"</END> </SPAN_REGEXP>
+
+		<!-- byte arrays -->
+		<SPAN TYPE="LITERAL4" DELEGATE="stringLiteral4"> <BEGIN>b"</BEGIN> <END>"</END> </SPAN>
+
+		<!-- command strings -->
+		<SPAN TYPE="LITERAL3" DELEGATE="stringLiteral3"> <BEGIN>`</BEGIN> <END>`</END> </SPAN>
+
+		<!-- types -->
+		<MARK_FOLLOWING MATCH_TYPE="OPERATOR" TYPE="KEYWORD3">::</MARK_FOLLOWING>
+		<SPAN TYPE="OPERATOR" DELEGATE="typeDescription"> <BEGIN>{</BEGIN> <END>}</END> </SPAN>
+		<SEQ TYPE="OPERATOR">&lt;:</SEQ> <!-- NOTE: will these appear outside of {}s which delegate to typeDescription? -->
+
+		<!-- function calls and definitions -->
+		<MARK_PREVIOUS MATCH_TYPE="OPERATOR" TYPE="FUNCTION">(</MARK_PREVIOUS>
+
+		<!-- macros -->
+		<MARK_FOLLOWING TYPE="MARKUP">@</MARK_FOLLOWING>
+		<MARK_FOLLOWING TYPE="MARKUP">$</MARK_FOLLOWING> <!-- NOTE: wanted to make $arg stuff easier to see -->
+
+		<!-- symbols -->
+		<SEQ_REGEXP HASH_CHAR=":" AT_WORD_START="TRUE" TYPE="LABEL">:[a-zA-Z_][a-zA-Z_0-9]*</SEQ_REGEXP>
+		<!-- <MARK_FOLLOWING TYPE="LABEL">:</MARK_FOLLOWING> -->
+
+		<!-- operators -->
+		<SEQ TYPE="OPERATOR">-&gt;</SEQ>
+
+		<SEQ TYPE="OPERATOR">&amp;&amp;</SEQ>
+		<SEQ TYPE="OPERATOR">||</SEQ>
+		<SEQ TYPE="OPERATOR">!</SEQ>
+
+		<SEQ TYPE="OPERATOR">~</SEQ>
+
+		<SEQ TYPE="OPERATOR">&amp;=</SEQ>
+		<SEQ TYPE="OPERATOR">|=</SEQ>
+		<SEQ TYPE="OPERATOR">$=</SEQ>
+		<SEQ TYPE="OPERATOR">&gt;&gt;&gt;=</SEQ>
+		<SEQ TYPE="OPERATOR">&gt;&gt;=</SEQ>
+		<SEQ TYPE="OPERATOR">&lt;&lt;=</SEQ>
+
+		<SEQ TYPE="OPERATOR">&amp;</SEQ>
+		<SEQ TYPE="OPERATOR">|</SEQ>
+		<SEQ TYPE="OPERATOR">$</SEQ>
+		<SEQ TYPE="OPERATOR">&gt;&gt;&gt;</SEQ>
+		<SEQ TYPE="OPERATOR">&gt;&gt;</SEQ>
+		<SEQ TYPE="OPERATOR">&lt;&lt;</SEQ>
+
+		<SEQ TYPE="OPERATOR">==</SEQ>
+		<SEQ TYPE="OPERATOR">!=</SEQ>
+		<SEQ TYPE="OPERATOR">&gt;</SEQ>
+		<SEQ TYPE="OPERATOR">&lt;</SEQ>
+		<SEQ TYPE="OPERATOR">&gt;=</SEQ>
+		<SEQ TYPE="OPERATOR">&lt;=</SEQ>
+
+		<SEQ TYPE="OPERATOR">//</SEQ>
+
+		<SEQ TYPE="OPERATOR">+=</SEQ>
+		<SEQ TYPE="OPERATOR">-=</SEQ>
+		<SEQ TYPE="OPERATOR">*=</SEQ>
+		<SEQ TYPE="OPERATOR">/=</SEQ>
+		<SEQ TYPE="OPERATOR">^=</SEQ>
+		<SEQ TYPE="OPERATOR">%=</SEQ>
+
+		<SEQ TYPE="OPERATOR">+</SEQ>
+		<SEQ TYPE="OPERATOR">-</SEQ>
+		<SEQ TYPE="OPERATOR">*</SEQ>
+		<SEQ TYPE="OPERATOR">/</SEQ>
+		<SEQ TYPE="OPERATOR">^</SEQ>
+		<SEQ TYPE="OPERATOR">%</SEQ>
+
+		<SEQ TYPE="OPERATOR">...</SEQ>
+
+		<SEQ TYPE="OPERATOR">]</SEQ>
+		<SEQ TYPE="OPERATOR">[</SEQ>
+		<SEQ TYPE="OPERATOR">{</SEQ>
+		<SEQ TYPE="OPERATOR">}</SEQ>
+
+		<SEQ TYPE="OPERATOR">=</SEQ>
+
+		<SEQ TYPE="OPERATOR">::</SEQ>
+
+		<SEQ TYPE="OPERATOR">?</SEQ>
+		<SEQ TYPE="OPERATOR">:</SEQ>
+
+		<SEQ TYPE="OPERATOR">;</SEQ>
+
+		<KEYWORDS>
+			<!-- NOTE:
+				KEYWORD1 for structure (things that line up with "end")
+				KEYWORD2 for stand-alone keywords (so structure is easier to see)
+				KEYWORD3 for types
+				KEYWORD4 for library functions
+				-->
+
+			<!-- keywords -->
+			<KEYWORD1>begin</KEYWORD1>
+			<KEYWORD1>end</KEYWORD1>
+
+			<KEYWORD1>let</KEYWORD1>
+
+			<KEYWORD1>quote</KEYWORD1>
+			<KEYWORD1>macro</KEYWORD1>
+			<KEYWORD4>eval</KEYWORD4>
+			<KEYWORD4>gensym</KEYWORD4>
+
+			<KEYWORD2>local</KEYWORD2>
+			<KEYWORD2>global</KEYWORD2>
+			<KEYWORD2>const</KEYWORD2>
+
+			<KEYWORD1>type</KEYWORD1>
+			<KEYWORD2>abstract</KEYWORD2>
+			<KEYWORD2>bitstype</KEYWORD2>
+			<KEYWORD2>typealias</KEYWORD2>
+			<KEYWORD4>super</KEYWORD4>
+			<KEYWORD4>new</KEYWORD4>
+
+			<KEYWORD1>function</KEYWORD1>
+			<KEYWORD2>return</KEYWORD2>
+
+			<KEYWORD1>if</KEYWORD1>
+			<KEYWORD1>else</KEYWORD1>
+			<KEYWORD1>elseif</KEYWORD1>
+
+			<KEYWORD1>while</KEYWORD1>
+			<KEYWORD1>for</KEYWORD1>
+			<KEYWORD2>break</KEYWORD2>
+			<KEYWORD2>continue</KEYWORD2>
+
+			<KEYWORD1>try</KEYWORD1>
+			<KEYWORD1>catch</KEYWORD1>
+			<KEYWORD2>throw</KEYWORD2>
+			<KEYWORD2>error</KEYWORD2>
+
+
+			<!-- literals -->
+			<!-- repl only? <LITERAL4>ans</LITERAL4> -->
+			<LITERAL4>false</LITERAL4>
+			<LITERAL4>true</LITERAL4>
+
+			<DIGIT>NaN</DIGIT>
+			<DIGIT>Inf</DIGIT>
+
+
+			<!-- types (incomplete) -->
+			<KEYWORD3>Int8</KEYWORD3>
+			<KEYWORD3>Uint8</KEYWORD3>
+			<KEYWORD3>Int16</KEYWORD3>
+			<KEYWORD3>Uint16</KEYWORD3>
+			<KEYWORD3>Int32</KEYWORD3>
+			<KEYWORD3>Uint32</KEYWORD3>
+			<KEYWORD3>Int64</KEYWORD3>
+			<KEYWORD3>Uint64</KEYWORD3>
+			<KEYWORD3>Int</KEYWORD3>
+			<KEYWORD3>Bool</KEYWORD3>
+			<KEYWORD3>Float32</KEYWORD3>
+			<KEYWORD3>Float64</KEYWORD3>
+
+			<KEYWORD3>Char</KEYWORD3>
+			<KEYWORD3>ASCIIString</KEYWORD3>
+			<KEYWORD3>UTF8String</KEYWORD3>
+			<KEYWORD3>Regex</KEYWORD3>
+			<KEYWORD3>Cmd</KEYWORD3>
+
+			<KEYWORD3>Array</KEYWORD3>
+
+			<KEYWORD3>Any</KEYWORD3>
+			<KEYWORD3>None</KEYWORD3>
+
+			<KEYWORD3>Task</KEYWORD3>
+
+
+			<!-- library functions -->
+
+			<!-- math -->
+			<KEYWORD4>round</KEYWORD4>
+			<KEYWORD4>iround</KEYWORD4>
+			<KEYWORD4>floor</KEYWORD4>
+			<KEYWORD4>ceil</KEYWORD4>
+			<KEYWORD4>trunc</KEYWORD4>
+			<KEYWORD4>itrunc</KEYWORD4>
+			<KEYWORD4>div</KEYWORD4>
+			<KEYWORD4>fld</KEYWORD4>
+			<KEYWORD4>rem</KEYWORD4>
+			<KEYWORD4>mod</KEYWORD4>
+			<KEYWORD4>gcd</KEYWORD4>
+			<KEYWORD4>lcm</KEYWORD4>
+			<KEYWORD4>abs</KEYWORD4>
+			<KEYWORD4>abs2</KEYWORD4>
+			<KEYWORD4>sign</KEYWORD4>
+			<KEYWORD4>signbit</KEYWORD4>
+			<KEYWORD4>copysign</KEYWORD4>
+			<KEYWORD4>sqrt</KEYWORD4>
+			<KEYWORD4>cbrt</KEYWORD4>
+			<KEYWORD4>hypot</KEYWORD4>
+			<KEYWORD4>pow</KEYWORD4>
+			<KEYWORD4>exp</KEYWORD4>
+			<KEYWORD4>expm1</KEYWORD4>
+			<KEYWORD4>ldexp</KEYWORD4>
+			<KEYWORD4>log</KEYWORD4>
+			<KEYWORD4>log</KEYWORD4>
+			<KEYWORD4>log2</KEYWORD4>
+			<KEYWORD4>log10</KEYWORD4>
+			<KEYWORD4>log1p</KEYWORD4>
+			<KEYWORD4>logb</KEYWORD4>
+			<KEYWORD4>erf</KEYWORD4>
+			<KEYWORD4>erfc</KEYWORD4>
+			<KEYWORD4>gamma</KEYWORD4>
+			<KEYWORD4>lgamma</KEYWORD4>
+
+			<!-- trig -->
+			<KEYWORD4>sin</KEYWORD4>
+			<KEYWORD4>cos</KEYWORD4>
+			<KEYWORD4>tan</KEYWORD4>
+			<KEYWORD4>cot</KEYWORD4>
+			<KEYWORD4>sec</KEYWORD4>
+			<KEYWORD4>csc</KEYWORD4>
+			<KEYWORD4>sinh</KEYWORD4>
+			<KEYWORD4>cosh</KEYWORD4>
+			<KEYWORD4>tanh</KEYWORD4>
+			<KEYWORD4>coth</KEYWORD4>
+			<KEYWORD4>sech</KEYWORD4>
+			<KEYWORD4>csch</KEYWORD4>
+			<KEYWORD4>asin</KEYWORD4>
+			<KEYWORD4>acos</KEYWORD4>
+			<KEYWORD4>atan</KEYWORD4>
+			<KEYWORD4>acot</KEYWORD4>
+			<KEYWORD4>asec</KEYWORD4>
+			<KEYWORD4>acsc</KEYWORD4>
+			<KEYWORD4>acoth</KEYWORD4>
+			<KEYWORD4>asech</KEYWORD4>
+			<KEYWORD4>acsch</KEYWORD4>
+			<KEYWORD4>sinc</KEYWORD4>
+			<KEYWORD4>cosc</KEYWORD4>
+			<KEYWORD4>atan2</KEYWORD4>
+
+			<!-- stdlib -->
+			<!-- curl 'http://julialang.org/manual/standard-library-reference/' | html2text | egrep -o '[a-z]\w+\(' | egrep -o '\w+' | sort -u | awk '{ print "\t\t\t<KEYWORD4>"$1"</KEYWORD4>" }' -->
+			<KEYWORD4>abs2</KEYWORD4>
+			<KEYWORD4>add</KEYWORD4>
+			<KEYWORD4>addprocs_local</KEYWORD4>
+			<KEYWORD4>addprocs_sge</KEYWORD4>
+			<KEYWORD4>addprocs_ssh</KEYWORD4>
+			<KEYWORD4>all</KEYWORD4>
+			<KEYWORD4>allp</KEYWORD4>
+			<KEYWORD4>any</KEYWORD4>
+			<KEYWORD4>anyp</KEYWORD4>
+			<KEYWORD4>applicable</KEYWORD4>
+			<KEYWORD4>ask</KEYWORD4>
+			<KEYWORD4>assert</KEYWORD4>
+			<KEYWORD4>assign</KEYWORD4>
+			<KEYWORD4>bin</KEYWORD4>
+			<KEYWORD4>binomial</KEYWORD4>
+			<KEYWORD4>bool</KEYWORD4>
+			<KEYWORD4>bswap</KEYWORD4>
+			<KEYWORD4>cat</KEYWORD4>
+			<KEYWORD4>cell</KEYWORD4>
+			<KEYWORD4>changedist</KEYWORD4>
+			<KEYWORD4>char</KEYWORD4>
+			<KEYWORD4>chars</KEYWORD4>
+			<KEYWORD4>chol</KEYWORD4>
+			<KEYWORD4>chomp</KEYWORD4>
+			<KEYWORD4>choose</KEYWORD4>
+			<KEYWORD4>chop</KEYWORD4>
+			<KEYWORD4>chr2ind</KEYWORD4>
+			<KEYWORD4>circshift</KEYWORD4>
+			<KEYWORD4>cis</KEYWORD4>
+			<KEYWORD4>clock</KEYWORD4>
+			<KEYWORD4>close</KEYWORD4>
+			<KEYWORD4>complex</KEYWORD4>
+			<KEYWORD4>cond</KEYWORD4>
+			<KEYWORD4>consume</KEYWORD4>
+			<KEYWORD4>contains</KEYWORD4>
+			<KEYWORD4>conv</KEYWORD4>
+			<KEYWORD4>convert</KEYWORD4>
+			<KEYWORD4>copy</KEYWORD4>
+			<KEYWORD4>count</KEYWORD4>
+			<KEYWORD4>countp</KEYWORD4>
+			<KEYWORD4>cstring</KEYWORD4>
+			<KEYWORD4>csvread</KEYWORD4>
+			<KEYWORD4>csvwrite</KEYWORD4>
+			<KEYWORD4>cumsum</KEYWORD4>
+			<KEYWORD4>current_output_stream</KEYWORD4>
+			<KEYWORD4>current_task</KEYWORD4>
+			<KEYWORD4>darray</KEYWORD4>
+			<KEYWORD4>dcell</KEYWORD4>
+			<KEYWORD4>dec</KEYWORD4>
+			<KEYWORD4>deconv</KEYWORD4>
+			<KEYWORD4>del</KEYWORD4>
+			<KEYWORD4>del_all</KEYWORD4>
+			<KEYWORD4>det</KEYWORD4>
+			<KEYWORD4>dfill</KEYWORD4>
+			<KEYWORD4>diag</KEYWORD4>
+			<KEYWORD4>diagm</KEYWORD4>
+			<KEYWORD4>distdim</KEYWORD4>
+			<KEYWORD4>distribute</KEYWORD4>
+			<KEYWORD4>dlmread</KEYWORD4>
+			<KEYWORD4>dlmwrite</KEYWORD4>
+			<KEYWORD4>dlopen</KEYWORD4>
+			<KEYWORD4>dlsym</KEYWORD4>
+			<KEYWORD4>done</KEYWORD4>
+			<KEYWORD4>dones</KEYWORD4>
+			<KEYWORD4>drand</KEYWORD4>
+			<KEYWORD4>drandn</KEYWORD4>
+			<KEYWORD4>dump</KEYWORD4>
+			<KEYWORD4>dzeros</KEYWORD4>
+			<KEYWORD4>each_line</KEYWORD4>
+			<KEYWORD4>edit</KEYWORD4>
+			<KEYWORD4>eig</KEYWORD4>
+			<KEYWORD4>eltype</KEYWORD4>
+			<KEYWORD4>emoteRef</KEYWORD4>
+			<KEYWORD4>empty</KEYWORD4>
+			<KEYWORD4>enq</KEYWORD4>
+			<KEYWORD4>eps</KEYWORD4>
+			<KEYWORD4>errno</KEYWORD4>
+			<KEYWORD4>error</KEYWORD4>
+			<KEYWORD4>exit</KEYWORD4>
+			<KEYWORD4>exp</KEYWORD4>
+			<KEYWORD4>expm1</KEYWORD4>
+			<KEYWORD4>exponent</KEYWORD4>
+			<KEYWORD4>eye</KEYWORD4>
+			<KEYWORD4>factorial</KEYWORD4>
+			<KEYWORD4>falses</KEYWORD4>
+			<KEYWORD4>fdio</KEYWORD4>
+			<KEYWORD4>fetch</KEYWORD4>
+			<KEYWORD4>fft</KEYWORD4>
+			<KEYWORD4>fftshift</KEYWORD4>
+			<KEYWORD4>fill</KEYWORD4>
+			<KEYWORD4>filter</KEYWORD4>
+			<KEYWORD4>finalizer</KEYWORD4>
+			<KEYWORD4>find</KEYWORD4>
+			<KEYWORD4>findn</KEYWORD4>
+			<KEYWORD4>flip</KEYWORD4>
+			<KEYWORD4>flipdim</KEYWORD4>
+			<KEYWORD4>fliplr</KEYWORD4>
+			<KEYWORD4>flipud</KEYWORD4>
+			<KEYWORD4>float32</KEYWORD4>
+			<KEYWORD4>float64</KEYWORD4>
+			<KEYWORD4>flush</KEYWORD4>
+			<KEYWORD4>gcd</KEYWORD4>
+			<KEYWORD4>get</KEYWORD4>
+			<KEYWORD4>getcwd</KEYWORD4>
+			<KEYWORD4>gethostname</KEYWORD4>
+			<KEYWORD4>getipaddr</KEYWORD4>
+			<KEYWORD4>getpid</KEYWORD4>
+			<KEYWORD4>grow</KEYWORD4>
+			<KEYWORD4>has</KEYWORD4>
+			<KEYWORD4>hash</KEYWORD4>
+			<KEYWORD4>hcat</KEYWORD4>
+			<KEYWORD4>hex2num</KEYWORD4>
+			<KEYWORD4>hex</KEYWORD4>
+			<KEYWORD4>ifft</KEYWORD4>
+			<KEYWORD4>ifftshift</KEYWORD4>
+			<KEYWORD4>ind2chr</KEYWORD4>
+			<KEYWORD4>ineIterator</KEYWORD4>
+			<KEYWORD4>insert</KEYWORD4>
+			<KEYWORD4>int2str</KEYWORD4>
+			<KEYWORD4>int8</KEYWORD4>
+			<KEYWORD4>int16</KEYWORD4>
+			<KEYWORD4>int32</KEYWORD4>
+			<KEYWORD4>int64</KEYWORD4>
+			<KEYWORD4>integer_valued</KEYWORD4>
+			<KEYWORD4>intset</KEYWORD4>
+			<KEYWORD4>inv</KEYWORD4>
+			<KEYWORD4>invoke</KEYWORD4>
+			<KEYWORD4>ipermute</KEYWORD4>
+			<KEYWORD4>is</KEYWORD4>
+			<KEYWORD4>isa</KEYWORD4>
+			<KEYWORD4>iscomplex</KEYWORD4>
+			<KEYWORD4>isdenormal</KEYWORD4>
+			<KEYWORD4>isempty</KEYWORD4>
+			<KEYWORD4>isequal</KEYWORD4>
+			<KEYWORD4>isfinite</KEYWORD4>
+			<KEYWORD4>isless</KEYWORD4>
+			<KEYWORD4>isnan</KEYWORD4>
+			<KEYWORD4>isreal</KEYWORD4>
+			<KEYWORD4>issorted</KEYWORD4>
+			<KEYWORD4>istaskdone</KEYWORD4>
+			<KEYWORD4>join</KEYWORD4>
+			<KEYWORD4>kron</KEYWORD4>
+			<KEYWORD4>lcm</KEYWORD4>
+			<KEYWORD4>length</KEYWORD4>
+			<KEYWORD4>linreg</KEYWORD4>
+			<KEYWORD4>linspace</KEYWORD4>
+			<KEYWORD4>load</KEYWORD4>
+			<KEYWORD4>localize</KEYWORD4>
+			<KEYWORD4>log1p</KEYWORD4>
+			<KEYWORD4>lpad</KEYWORD4>
+			<KEYWORD4>lu</KEYWORD4>
+			<KEYWORD4>make_scheduled</KEYWORD4>
+			<KEYWORD4>mantissa</KEYWORD4>
+			<KEYWORD4>map</KEYWORD4>
+			<KEYWORD4>max</KEYWORD4>
+			<KEYWORD4>memio</KEYWORD4>
+			<KEYWORD4>method_exists</KEYWORD4>
+			<KEYWORD4>min</KEYWORD4>
+			<KEYWORD4>mod</KEYWORD4>
+			<KEYWORD4>myid</KEYWORD4>
+			<KEYWORD4>myindexes</KEYWORD4>
+			<KEYWORD4>ndims</KEYWORD4>
+			<KEYWORD4>next</KEYWORD4>
+			<KEYWORD4>nextfloat</KEYWORD4>
+			<KEYWORD4>nextpow2</KEYWORD4>
+			<KEYWORD4>nnz</KEYWORD4>
+			<KEYWORD4>nprocs</KEYWORD4>
+			<KEYWORD4>ntSet</KEYWORD4>
+			<KEYWORD4>nthperm</KEYWORD4>
+			<KEYWORD4>ntuple</KEYWORD4>
+			<KEYWORD4>num2hex</KEYWORD4>
+			<KEYWORD4>numel</KEYWORD4>
+			<KEYWORD4>nvHash</KEYWORD4>
+			<KEYWORD4>oct</KEYWORD4>
+			<KEYWORD4>one</KEYWORD4>
+			<KEYWORD4>ones</KEYWORD4>
+			<KEYWORD4>op</KEYWORD4>
+			<KEYWORD4>open</KEYWORD4>
+			<KEYWORD4>owner</KEYWORD4>
+			<KEYWORD4>parse_int</KEYWORD4>
+			<KEYWORD4>permute</KEYWORD4>
+			<KEYWORD4>pop</KEYWORD4>
+			<KEYWORD4>position</KEYWORD4>
+			<KEYWORD4>powermod</KEYWORD4>
+			<KEYWORD4>prevfloat</KEYWORD4>
+			<KEYWORD4>print</KEYWORD4>
+			<KEYWORD4>println</KEYWORD4>
+			<KEYWORD4>procs</KEYWORD4>
+			<KEYWORD4>prod</KEYWORD4>
+			<KEYWORD4>produce</KEYWORD4>
+			<KEYWORD4>promote</KEYWORD4>
+			<KEYWORD4>promote_type</KEYWORD4>
+			<KEYWORD4>push</KEYWORD4>
+			<KEYWORD4>put</KEYWORD4>
+			<KEYWORD4>qr</KEYWORD4>
+			<KEYWORD4>rand</KEYWORD4>
+			<KEYWORD4>randchi2</KEYWORD4>
+			<KEYWORD4>randcycle</KEYWORD4>
+			<KEYWORD4>randf</KEYWORD4>
+			<KEYWORD4>randg</KEYWORD4>
+			<KEYWORD4>randi</KEYWORD4>
+			<KEYWORD4>randn</KEYWORD4>
+			<KEYWORD4>randperm</KEYWORD4>
+			<KEYWORD4>rank</KEYWORD4>
+			<KEYWORD4>read</KEYWORD4>
+			<KEYWORD4>readall</KEYWORD4>
+			<KEYWORD4>readline</KEYWORD4>
+			<KEYWORD4>readlines</KEYWORD4>
+			<KEYWORD4>readuntil</KEYWORD4>
+			<KEYWORD4>real_valued</KEYWORD4>
+			<KEYWORD4>realmax</KEYWORD4>
+			<KEYWORD4>realmin</KEYWORD4>
+			<KEYWORD4>reduce</KEYWORD4>
+			<KEYWORD4>ref</KEYWORD4>
+			<KEYWORD4>reinterpret</KEYWORD4>
+			<KEYWORD4>remote_call</KEYWORD4>
+			<KEYWORD4>remote_call_fetch</KEYWORD4>
+			<KEYWORD4>remote_call_wait</KEYWORD4>
+			<KEYWORD4>repmat</KEYWORD4>
+			<KEYWORD4>reshape</KEYWORD4>
+			<KEYWORD4>reverse</KEYWORD4>
+			<KEYWORD4>rpad</KEYWORD4>
+			<KEYWORD4>rray</KEYWORD4>
+			<KEYWORD4>safe_char</KEYWORD4>
+			<KEYWORD4>seek</KEYWORD4>
+			<KEYWORD4>set_current_output_stream</KEYWORD4>
+			<KEYWORD4>setcwd</KEYWORD4>
+			<KEYWORD4>show</KEYWORD4>
+			<KEYWORD4>showall</KEYWORD4>
+			<KEYWORD4>shuffle</KEYWORD4>
+			<KEYWORD4>similar</KEYWORD4>
+			<KEYWORD4>size</KEYWORD4>
+			<KEYWORD4>sizeof</KEYWORD4>
+			<KEYWORD4>skip</KEYWORD4>
+			<KEYWORD4>slicedim</KEYWORD4>
+			<KEYWORD4>sort</KEYWORD4>
+			<KEYWORD4>sortperm</KEYWORD4>
+			<KEYWORD4>sortr</KEYWORD4>
+			<KEYWORD4>split</KEYWORD4>
+			<KEYWORD4>squeeze</KEYWORD4>
+			<KEYWORD4>start</KEYWORD4>
+			<KEYWORD4>strcat</KEYWORD4>
+			<KEYWORD4>strchr</KEYWORD4>
+			<KEYWORD4>strerror</KEYWORD4>
+			<KEYWORD4>stride</KEYWORD4>
+			<KEYWORD4>strides</KEYWORD4>
+			<KEYWORD4>string</KEYWORD4>
+			<KEYWORD4>strlen</KEYWORD4>
+			<KEYWORD4>sub</KEYWORD4>
+			<KEYWORD4>subtype</KEYWORD4>
+			<KEYWORD4>sum</KEYWORD4>
+			<KEYWORD4>svd</KEYWORD4>
+			<KEYWORD4>system</KEYWORD4>
+			<KEYWORD4>take</KEYWORD4>
+			<KEYWORD4>task_exit</KEYWORD4>
+			<KEYWORD4>throw</KEYWORD4>
+			<KEYWORD4>tic</KEYWORD4>
+			<KEYWORD4>tls</KEYWORD4>
+			<KEYWORD4>toc</KEYWORD4>
+			<KEYWORD4>toq</KEYWORD4>
+			<KEYWORD4>trace</KEYWORD4>
+			<KEYWORD4>tril</KEYWORD4>
+			<KEYWORD4>tring</KEYWORD4>
+			<KEYWORD4>triu</KEYWORD4>
+			<KEYWORD4>trues</KEYWORD4>
+			<KEYWORD4>tuple</KEYWORD4>
+			<KEYWORD4>typemax</KEYWORD4>
+			<KEYWORD4>typemin</KEYWORD4>
+			<KEYWORD4>typeof</KEYWORD4>
+			<KEYWORD4>uid</KEYWORD4>
+			<KEYWORD4>uint8</KEYWORD4>
+			<KEYWORD4>uint16</KEYWORD4>
+			<KEYWORD4>uint32</KEYWORD4>
+			<KEYWORD4>uint64</KEYWORD4>
+			<KEYWORD4>union</KEYWORD4>
+			<KEYWORD4>value</KEYWORD4>
+			<KEYWORD4>vcat</KEYWORD4>
+			<KEYWORD4>wait</KEYWORD4>
+			<KEYWORD4>whos</KEYWORD4>
+			<KEYWORD4>with_output_stream</KEYWORD4>
+			<KEYWORD4>write</KEYWORD4>
+			<KEYWORD4>xcorr</KEYWORD4>
+			<KEYWORD4>yield</KEYWORD4>
+			<KEYWORD4>yieldto</KEYWORD4>
+			<KEYWORD4>zero</KEYWORD4>
+			<KEYWORD4>zeros</KEYWORD4>
+
+		</KEYWORDS>
+	</RULES>
+
+	<RULES DEFAULT="LITERAL2" SET="stringLiteral2" ESCAPE="\">
+		<SPAN DELEGATE="MAIN" TYPE="OPERATOR"> <BEGIN>$(</BEGIN> <END>)</END> </SPAN>
+		<SPAN DELEGATE="MAIN" TYPE="OPERATOR"> <BEGIN>$[</BEGIN> <END>]</END> </SPAN>
+		<MARK_FOLLOWING MATCH_TYPE="OPERATOR" TYPE="NULL">$</MARK_FOLLOWING>
+	</RULES>
+
+	<RULES DEFAULT="LITERAL3" SET="stringLiteral3" ESCAPE="\">
+		<SPAN DELEGATE="MAIN" TYPE="OPERATOR"> <BEGIN>$(</BEGIN> <END>)</END> </SPAN>
+		<SPAN DELEGATE="MAIN" TYPE="OPERATOR"> <BEGIN>$[</BEGIN> <END>]</END> </SPAN>
+		<MARK_FOLLOWING MATCH_TYPE="OPERATOR" TYPE="NULL">$</MARK_FOLLOWING>
+	</RULES>
+
+	<RULES DEFAULT="LITERAL4" SET="stringLiteral4" ESCAPE="\">
+		<SPAN DELEGATE="MAIN" TYPE="OPERATOR"> <BEGIN>$(</BEGIN> <END>)</END> </SPAN>
+		<SPAN DELEGATE="MAIN" TYPE="OPERATOR"> <BEGIN>$[</BEGIN> <END>]</END> </SPAN>
+		<MARK_FOLLOWING MATCH_TYPE="OPERATOR" TYPE="NULL">$</MARK_FOLLOWING>
+	</RULES>
+
+	<RULES DEFAULT="KEYWORD3" SET="typeDescription" ESCAPE="\">
+		<SEQ TYPE="OPERATOR">&lt;:</SEQ>
+		<SEQ TYPE="OPERATOR">{</SEQ>
+		<SEQ TYPE="OPERATOR">}</SEQ>
+		<SEQ TYPE="NULL">,</SEQ>
+	</RULES>
+</MODE>
+
