@@ -25,7 +25,19 @@
 		<EOL_SPAN TYPE="COMMENT1">#</EOL_SPAN>
 
 		<!-- characters -->
-		<SPAN TYPE="LITERAL1" ESCAPE="\"> <BEGIN>'</BEGIN> <END>'</END> </SPAN>
+		<!-- NOTE:
+			this transpose versus char literal issue is going to be tricky especially since
+			x ' seems to be legal for x'
+			fortunately we are targeting single character representations,
+			not arbitrary single quoted strings as in octave
+			-->
+		<!-- <SPAN TYPE="LITERAL1" AT_WORD_START="TRUE" ESCAPE="\"> <BEGIN>'</BEGIN> <END>'</END> </SPAN> -->
+		<SEQ TYPE="LITERAL1">' '</SEQ>
+		<SEQ_REGEXP HASH_CHAR="'" TYPE="LITERAL1">'\\\S'</SEQ_REGEXP>
+		<SEQ_REGEXP HASH_CHAR="'" TYPE="LITERAL1">'\S'</SEQ_REGEXP>
+		<SEQ_REGEXP HASH_CHAR="'" TYPE="LITERAL1">'\\\d{3}'</SEQ_REGEXP>
+		<SEQ_REGEXP HASH_CHAR="'" TYPE="LITERAL1">'\\x[0-9a-fA-F]{2}'</SEQ_REGEXP>
+		<SEQ_REGEXP HASH_CHAR="'" TYPE="LITERAL1">'\\[uU][0-9a-fA-F]+'</SEQ_REGEXP>
 
 		<!-- strings -->
 		<SPAN TYPE="LITERAL2" DELEGATE="stringLiteral2"> <BEGIN>"</BEGIN> <END>"</END> </SPAN>
