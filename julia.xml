@@ -29,7 +29,8 @@
 			this transpose versus char literal issue is going to be tricky especially since
 			x ' seems to be legal for x'
 			fortunately we are targeting single character representations,
-			not arbitrary single quoted strings as in octave
+			not arbitrary single quoted strings as in octave,
+			but there is also x' ' and x''' and x'.' to worry about!?
 			-->
 		<!-- <SPAN TYPE="LITERAL1" AT_WORD_START="TRUE" ESCAPE="\"> <BEGIN>'</BEGIN> <END>'</END> </SPAN> -->
 		<SEQ TYPE="LITERAL1">' '</SEQ>
