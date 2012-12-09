@@ -16,7 +16,9 @@
 	<RULES
 		IGNORE_CASE="FALSE"
 		HIGHLIGHT_DIGITS="TRUE"
-		DIGIT_RE="[0-9]+(im)?|0x[0-9a-fA-F]+(im)?|[0-9]+e[0-9]*(im)?">
+		DIGIT_RE="([0-9]+|0b[01]+|0o[0-7]+|0x[0-9a-fA-F]+)(e|E|(im))?|[0-9]+[eE][0-9]+(im)?"
+		>
+		<!-- NO_WORD_SEP="!" -->
 
 		<!-- comments -->
 		<EOL_SPAN TYPE="COMMENT4">####</EOL_SPAN>
@@ -47,7 +49,8 @@
 		<SPAN TYPE="LITERAL2" ESCAPE="\"> <BEGIN>L"</BEGIN> <END>"</END> </SPAN>
 
 		<!-- regexs -->
-		<SPAN_REGEXP HASH_CHAR="r" TYPE="LITERAL4" ESCAPE="\"> <BEGIN>r[ims]*"</BEGIN> <END>"</END> </SPAN_REGEXP>
+		<!-- <SPAN_REGEXP HASH_CHAR="r" TYPE="LITERAL4" ESCAPE="\"> <BEGIN>r[ims]*"</BEGIN> <END>"</END> </SPAN_REGEXP> -->
+		<SPAN TYPE="LITERAL4" ESCAPE="\"> <BEGIN>r"</BEGIN> <END>"</END> </SPAN>
 
 		<!-- byte arrays -->
 		<SPAN TYPE="LITERAL4" DELEGATE="stringLiteral4"> <BEGIN>b"</BEGIN> <END>"</END> </SPAN>
@@ -145,6 +148,8 @@
 			<KEYWORD1>begin</KEYWORD1>
 			<KEYWORD1>end</KEYWORD1>
 
+			<KEYWORD1>do</KEYWORD1>
+
 			<KEYWORD1>let</KEYWORD1>
 
 			<KEYWORD1>quote</KEYWORD1>
@@ -183,12 +188,22 @@
 
 			<!-- literals -->
 			<!-- repl only? <LITERAL4>ans</LITERAL4> -->
+			<LITERAL4>nothing</LITERAL4>
 			<LITERAL4>false</LITERAL4>
 			<LITERAL4>true</LITERAL4>
 
 			<DIGIT>NaN</DIGIT>
 			<DIGIT>Inf</DIGIT>
 
+			<!-- special globals:
+			     would like to do something different than for true,false,nothing,
+			     but running out of jedit syntax types
+			     -->
+			<LITERAL4>ARGS</LITERAL4>
+			<LITERAL4>ENV</LITERAL4>
+			<LITERAL4>stdin_stream</LITERAL4>
+			<LITERAL4>stdout_stream</LITERAL4>
+			<LITERAL4>stderr_stream</LITERAL4>
 
 			<!-- types (incomplete) -->
 			<KEYWORD3>Int8</KEYWORD3>
@@ -571,6 +586,9 @@
 			<KEYWORD4>zero</KEYWORD4>
 			<KEYWORD4>zeros</KEYWORD4>
 
+			<INVALID>0b</INVALID>
+			<INVALID>0o</INVALID>
+			<INVALID>0x</INVALID>
 		</KEYWORDS>
 	</RULES>
 
