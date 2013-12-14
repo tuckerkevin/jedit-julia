@@ -5,7 +5,7 @@
 	by Kevin Tucker
 
 	catalog line:
-	<MODE NAME="julia" FILE="julia.xml" FILE_NAME_GLOB="*.{j,jl}" />
+	<MODE NAME="julia" FILE="julia.xml" FILE_NAME_GLOB="*.jl" />
 	-->
 
 <MODE>
